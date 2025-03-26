@@ -4,7 +4,9 @@ import tasksRoutes from './routes/route.js'; // Ensure this file exists
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use('/', tasksRoutes); // Routes middleware
+// Middleware to parse JSON bodies
+app.use(express.json());
+app.use('/tasks', tasksRoutes); // Routes middleware
 
 // Start Server
 app.listen(PORT, () => {
