@@ -31,4 +31,15 @@ function updateTask(id, updatedtatus) {
     return tasks[taskIndex]; // Return the updated task
 }
 
-export { getTasks, getOneTask, createTask, updateTask }; // Export all functions for use in routes/routes.js
+// delete task
+function deleteTask(id) {
+    const taskIndex = tasks.findIndex((task) => task.id === id); // Find the index of the task
+    
+    if (taskIndex === -1) // If the task doesn't exist
+    return null; // Return null and handle the error in the route
+         
+    tasks.splice(taskIndex, 1); // delete the task
+    return tasks; // Return the updated task
+}
+
+export { getTasks, getOneTask, createTask, updateTask, deleteTask }; // Export all functions for use in routes/routes.js
