@@ -18,4 +18,16 @@ function createTask(newTask) {
 }
 
 
-export { getTasks, getOneTask, createTask };
+// Logic to update a task
+function updateTask(id, updatedtatus) {
+    const taskIndex = tasks.findIndex((task) => task.id === id);
+    
+    if (taskIndex === -1) {
+        return null;
+    }
+
+    tasks[taskIndex].completed = updatedtatus;
+    return tasks[taskIndex];
+}
+
+export { getTasks, getOneTask, createTask, updateTask }; // Export all functions for use in routes/routes.js

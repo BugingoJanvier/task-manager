@@ -1,5 +1,5 @@
 import express from 'express';
-import { getTasks, getOneTask, createTask } from '../controllers/tasks.js';
+import { getTasks, getOneTask, createTask, updateTask } from '../controllers/tasks.js';
 import bodyParser from 'body-parser';
 
 const router = express.Router(); // Initialize the router
@@ -27,6 +27,19 @@ router.post('/', (req, res) => {
     const task = req.body;
     createTask(task);
     res.json(task);
+});
+
+// Logic to update a task
+router.put('/update/:id', (req, res) => {
+
+    const id = parseInt(req.params.id, 10); // Convert ID to a number
+    const { completed } = req.body; // Get the completed status from the request body
+    const task = updateTask(id, completed); // Update the task
+    if (!task) {
+        return res.status(404).json({ message: "Task not found" }); // Return a 404 Not Found error if task doesn't exist
+    }
+    res.json(task); // Return the updated task
+    
 });
 
 
