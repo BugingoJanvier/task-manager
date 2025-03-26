@@ -1,25 +1,33 @@
 import express from 'express';
-import { getTasks , getOneTask} from '../controllers/tasks.js';
+import { getTasks, getOneTask, createTask } from '../controllers/tasks.js';
+import bodyParser from 'body-parser';
 
-const router = express.Router();
+const router = express.Router(); // Initialize the router
+
+// Only use the body-parser for POST, PUT, or PATCH requests that involve data
+router.use(bodyParser.json());  // Apply bodyParser middleware to handle JSON data (needed for POST/PUT routes)
 
 // Logic to get all tasks
-router.get('/', (req, res) => 
-            {
-            res.json(getTasks());
-            } // Return all tasks
-           );  
+router.get('/', (req, res) => {
+    res.json(getTasks());
+});
 
 // Get a single task by ID
-router.get('/:id', (req, res) => 
-            {
-            const id = parseInt(req.params.id, 10); // Convert ID to a number
-            const task = getOneTask(id); // Get the task by ID
-            if (!task) { return res.status(404).json({ message: "Task not found" }); } // Return a 404 Not Found error
-            res.json(task);  // Return the task
-            }
-        );
+router.get('/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10); // Convert ID to a number
+    const task = getOneTask(id); // Get the task by ID
+    if (!task) {
+        return res.status(404).json({ message: "Task not found" }); // Return a 404 Not Found error if task doesn't exist
+    }
+    res.json(task);  // Return the task
+});
+
+// Logic to create a task
+router.post('/', (req, res) => {
+    const task = req.body;
+    createTask(task);
+    res.json(task);
+});
+
 
 export default router;
-
-
