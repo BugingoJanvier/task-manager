@@ -29,8 +29,8 @@ router.post('/', (req, res) => {
     res.json(task);
 });
 
-// Logic to update a task
-router.put('/update/:id', (req, res) => {
+// Logic to update a task, Use PATCH to update a task
+router.patch('/update/:id', (req, res) => { 
 
     const id = parseInt(req.params.id, 10); // Convert ID to a number
     const { completed } = req.body; // Get the completed status from the request body
@@ -41,6 +41,8 @@ router.put('/update/:id', (req, res) => {
     res.json(task); // Return the updated task
     
 });
+
+
 
 
 export default router;
